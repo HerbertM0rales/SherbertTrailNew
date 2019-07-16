@@ -69,7 +69,7 @@ export class HomePage {
             lat: resp.coords.latitude,
             lng: resp.coords.longitude
           },
-          zoom: 18,
+          zoom: 15,
           tilt: 30
         },
         gestures: {
@@ -80,10 +80,48 @@ export class HomePage {
         },
         styles: [
           {
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#f5f5e9"
+              }
+            ]
+          },
+          {
             "elementType": "geometry.stroke",
             "stylers": [
               {
-                "color": "#e8848e"
+                "color": "#da9a9a"
+              },
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "elementType": "labels",
+            "stylers": [
+              {
+                "color": "#d2bad2"
+              },
+              {
+                "weight": 0.5
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text",
+            "stylers": [
+              {
+                "color": "#85c9e2"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#bee0df"
               }
             ]
           },
@@ -121,6 +159,7 @@ export class HomePage {
               }
             ]
           }
+         
         ]
       };
      
@@ -140,10 +179,49 @@ export class HomePage {
  // data can be a set of coordinates, or an error (if an error occurred).
  // data.coords.latitude
  // data.coords.longitude
+
+ let marker3: Marker = this.map.addMarkerSync({
+  title: 'Leons Ice cream truck!',
+  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan. ',
+  icon: 'https://i.ibb.co/HqF3PMr/Group-8-16.png',
+  position: {
+    lat: 34.02417366297443,
+    lng: -118.293818
+  },
+});
+let marker4: Marker = this.map.addMarkerSync({
+  title: 'Irvins Ice Cream Truck!',
+  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+  icon: 'https://i.ibb.co/HqF3PMr/Group-8-16.png',
+  position: {
+    lat: 34.023842,
+    lng: -118.293827
+  },
+});
+let marker5: Marker = this.map.addMarkerSync({
+  title: ' Herberts Ice Cream Truck!',
+  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+  icon: 'https://i.ibb.co/HqF3PMr/Group-8-16.png',
+  position: {
+    lat: 34.028431,
+    lng: -118.286344
+  },
+});
+let marker6: Marker = this.map.addMarkerSync({
+  title: 'Eliseos Ice Cream Truck!',
+  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+  icon: 'https://i.ibb.co/HqF3PMr/Group-8-16.png',
+  position: {
+    lat: 34.023910,
+    lng: -118.279940
+  },
+});
+
+
     let marker2: Marker = this.map.addMarkerSync({
-      title: 'this is truck driver',
-      snippet: '',
-      icon: 'https://i.ibb.co/d6CybXF/Group-8-6.png',
+      title: 'Some persons ice cream truck!',
+      snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+      icon: 'https://i.ibb.co/HqF3PMr/Group-8-16.png',
       position: {
         lat: 34.02417366297443,
         lng: -118.2873374654963
@@ -152,7 +230,7 @@ export class HomePage {
     });
 
       let marker: Marker = this.map.addMarkerSync({
-        title: 'this is our location',
+        title: 'Customer!',
          snippet: '',
          icon: 'https://i.ibb.co/sRMKQt3/Untitled-2.png',
          position: {lat: data.coords.latitude,
