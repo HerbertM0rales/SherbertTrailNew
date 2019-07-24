@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
 
+
 import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
   Marker,
-  GoogleMapsAnimation,
-  MyLocation,
   Environment,
   GoogleMapOptions,
   MyLocationOptions,
-  MarkerIcon,
-  LatLng
+  LatLng,
+  HtmlInfoWindow
 } from '@ionic-native/google-maps';
 import { Platform } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Icon } from 'ionicons/dist/types/icon/icon';
 
 
 
@@ -27,9 +25,12 @@ import { Icon } from 'ionicons/dist/types/icon/icon';
 
 })
 export class HomePage {
+  marker6 :Marker;
+  htmlInfoWindow = new HtmlInfoWindow();
 
   latLng: LatLng;
 
+  heatmap;
   map: GoogleMap;
   maps: GoogleMaps;
   marker2: Marker;
@@ -40,25 +41,14 @@ export class HomePage {
 
   constructor(private platform: Platform, public geolocation: Geolocation) { }
 
-
+  locationArray = [{
+    lat: 10,
+    lng: 10,
+  }];
   options: MyLocationOptions = {
     enableHighAccuracy: true
     
   };
-  icon_truck: MarkerIcon = {
-    url: ' https://i.ibb.co/99X19gx/Group-8-2.png',
-    size: {
-      width: 32,
-      height: 24
-      
-      
-    }
-  };
-
-  
-
-
-
 
   async ngOnInit() {
     // Since ngOnInit() is executed before `deviceready` event,
@@ -71,13 +61,17 @@ export class HomePage {
 
     // This code is necessary for browser
     Environment.setEnv({
-      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyDIi6uK4S1yM7zxDPVfEDFMUOw0hWt-Yl8',
-      'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyDIi6uK4S1yM7zxDPVfEDFMUOw0hWt-Yl8'
+      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyDgH97l52_Bcms2ViKaye0B_tsNFbZr0Wk',
+      'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyDgH97l52_Bcms2ViKaye0B_tsNFbZr0Wk'
     });
-
+   
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
+
+      this.locationArray[0].lat = resp.coords.latitude;
+      this.locationArray[0].lng = resp.coords.longitude;
+
 
       const googleMapOptions: GoogleMapOptions = {
         controls: {
@@ -87,7 +81,7 @@ export class HomePage {
             lat: resp.coords.latitude,
             lng: resp.coords.longitude
           },
-          zoom: 12,
+          zoom: 15,
           tilt: 30
         },
         gestures: {
@@ -103,7 +97,7 @@ export class HomePage {
             "elementType": "geometry.fill",
             "stylers": [
               {
-                "weight": 2.5
+                 "weight": 5
               }
             ]
           },
@@ -114,7 +108,7 @@ export class HomePage {
                 "color": "#fbe3ed"
               },
               {
-                "weight": 4.5
+                "weight": 5
               }
             ]
           }
@@ -125,7 +119,40 @@ export class HomePage {
       this.map = GoogleMaps.create('map_canvas', googleMapOptions);
      }).catch((error) => {
        console.log('Error getting location', error);
-     });
+     }).then(()=>{
+      this.marker2 = this.map.addMarkerSync({
+        title: 'Some persons ice cream truck!',
+        snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+        icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
+        position: {
+          lat: 34.02417366297443,
+          lng: -118.2873374654963
+        },
+      
+      });
+      
+    
+      this.marker6 = this.map.addMarkerSync({
+        title: 'Eliseos Ice Cream Truck!',
+        snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
+        icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
+        position: {
+          lat: 34.023910,
+          lng: -118.279940
+          
+        },
+        
+      });
+     
+     
+    
+      this.changeMarkerPos();
+
+
+      
+     })
+     
+     
      
 
       // this.map.animateCamera({
@@ -133,74 +160,20 @@ export class HomePage {
       //   zoom: 17,
       //   tilt: 25,
       // });
-      let watch = this.geolocation.watchPosition();
-      watch.subscribe((data) => {
+
+
+
+  
+        
  // data can be a set of coordinates, or an error (if an error occurred).
  // data.coords.latitude
  // data.coords.longitude
 
 
- this.marker2 = this.map.addMarkerSync({
-  title: 'Some persons ice cream truck!',
-  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
-  icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
-  position: {
-    lat: 34.02417366297443,
-    lng: -118.2873374654963
-  },
-  animation: GoogleMapsAnimation.BOUNCE,
-});
 
- let marker3: Marker = this.map.addMarkerSync({
-  title: 'Leons Ice cream truck!',
-  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan. ',
-  icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
-  position: {
-    lat: 34.02417369,
-    lng: -118.293818
-  },
-});
-let marker4: Marker = this.map.addMarkerSync({
-  title: 'Irvins Ice Cream Truck!',
-  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
-  icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
-  position: {
-    lat: 34.023842,
-    lng: -118.293827
-    
-  },
-});
-let marker5: Marker = this.map.addMarkerSync({
-  title: ' Herberts Ice Cream Truck!',
-  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
-  icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
-  position: {
-    lat: 34.028431,
-    lng: -118.286344
-  },
-});
-let marker6: Marker = this.map.addMarkerSync({
-  title: 'Eliseos Ice Cream Truck!',
-  snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
-  icon: 'https://i.ibb.co/KXzBdqq/Group-10-2-2.png',
-  position: {
-    lat: 34.023910,
-    lng: -118.279940
-  },
-});
 
-let marker: Marker = this.map.addMarkerSync({
-  title: 'Customer!',
-    snippet: '',
-    icon: 'https://i.ibb.co/sRMKQt3/Untitled-2.png',
-    position: {lat: data.coords.latitude,
-                        lng: data.coords.longitude},
-    animation: GoogleMapsAnimation.BOUNCE
-    
-         
-       });
-       this.changeMarkerPos();
-      });
+   
+ 
 
       
       
@@ -209,14 +182,102 @@ let marker: Marker = this.map.addMarkerSync({
 
   }
 
-  async changeMarkerPos(){
-    for(let i=.001; i<.05; i=i+.001){
-      for(let j=0; j<10000; j++){
-      for(let u=0; u<10; u++){}};
-      let newPosition : LatLng = new LatLng(this.locationHolder.lat +i, this.locationHolder.lng+i);
-      console.log(newPosition);
-      this.marker2.setPosition(newPosition);
+  
+
+   changeMarkerPos(){
+
+    let frame: HTMLElement = document.createElement('div');
+    frame.innerHTML = [
+      '<h3>Hearst Castle</h3>',
+      '<h1>hello</h1>'
+    ].join("");
+    this.htmlInfoWindow.setContent(frame, {
+      width: "100px",
+      height: "150px", 
+    });
+  
+    this.marker6.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+      this.marker6.hideInfoWindow();
+      this.htmlInfoWindow.open(this.marker6);
+    });
+    
+    
+
+   this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((event)=>{
+     let clickCoords : LatLng = event[0];
+     console.log(clickCoords.lat, clickCoords.lng);
+
+     if( clickCoords.lat < this.locationArray[0].lat){
+      let j;
+      for(let i=this.locationArray[0].lat; i > clickCoords.lat; i=i-.00001){
+        for(let j=0; j<100; j++){
+          for(let u=0; u<10; u++){}
+        }
+        let newPosition : LatLng = new LatLng( i, this.locationArray[0].lng );
+        this.marker2.setPosition(newPosition);
+        j = i;
     }
-  };
+
+    this.locationArray[0].lat = j;
+    }
+
+    else if( clickCoords.lat > this.locationArray[0].lat){
+      let j;
+      console.log('it got to longitude')
+      for(let i=this.locationArray[0].lat; i < clickCoords.lat; i=i+.00001){
+        for(let j=0; j<100; j++){
+          for(let u=0; u<10; u++){}
+        }
+        let newPosition : LatLng = new LatLng( i, this.locationArray[0].lng );
+        this.marker2.setPosition(newPosition);
+        j = i;
+
+    }
+    this.locationArray[0].lat = j;
+  }
+ 
+
+  if( clickCoords.lng < this.locationArray[0].lng){
+    let j;
+    console.log('it got to longitude')
+    for(let i=this.locationArray[0].lng; i > clickCoords.lng; i=i-.00001){
+      for(let j=0; j<100; j++){
+        for(let u=0; u<10; u++){}
+      }
+      let newPosition : LatLng = new LatLng( this.locationArray[0].lat, i);
+      this.marker2.setPosition(newPosition);
+      j = i;
+
+  }
+  this.locationArray[0].lng = j;
 
 }
+
+  else if( clickCoords.lng > this.locationArray[0].lng){
+    let j;
+    for(let i=this.locationArray[0].lng; i < clickCoords.lng; i=i+.00001){
+      for(let j=0; j<100; j++){
+        for(let u=0; u<10; u++){}
+      }
+      let newPosition : LatLng = new LatLng( this.locationArray[0].lat, i);
+      this.marker2.setPosition(newPosition);
+      j= i;
+
+  }
+  this.locationArray[0].lng = j;
+}
+
+
+  console.log(this.marker2.getPosition());
+  
+
+    });
+}
+
+
+}
+
+
+
+
+
