@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -17,6 +17,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Button } from 'protractor';
 import { DEFAULT_PACKAGE_URL_PROVIDER } from '@angular/platform-browser-dynamic/src/compiler_factory';
 import { DrawerState } from 'ion-bottom-drawer';
+import { Stats } from 'fs';
 
 
 
@@ -28,8 +29,15 @@ import { DrawerState } from 'ion-bottom-drawer';
 
 })
 export class HomePage {
+  public truck = {
+    name: '',
+    desc: ['','', ''],
+    time: '',
+    ContactInfo:'',
+    Status:''
+  }
   marker6: Marker;
-  public state = DrawerState.Docked;
+  public state = DrawerState.Bottom;
 
   latLng: LatLng;
 
@@ -42,7 +50,7 @@ export class HomePage {
     lng: -118.2873374654963
   };
 
-  constructor(private platform: Platform, public geolocation: Geolocation, private router: Router) { }
+  constructor(public zone: NgZone, private platform: Platform, public geolocation: Geolocation, private router: Router) { }
 
   locationArray = [{
     lat: 10,
@@ -121,105 +129,83 @@ export class HomePage {
 
 
       this.map = GoogleMaps.create('map_canvas', googleMapOptions);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    }).then(() => {
+
       this.marker2 = this.map.addMarkerSync({
-        title: 'Some persons ice cream truck!',
-        snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu leo in neque pellentesque accumsan.',
         icon: {
           url: 'https://i.ibb.co/WBT84Vj/Group-74-7.png',
-          size:{
+          size: {
             width: 70,
             height: 85
           }
-        
-        },
 
+        },
         position: {
           lat: 34.02417366297443,
           lng: -118.2873374654963
         },
-
       });
 
+      this.marker2.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        console.log('clicked');
+        this.openDrawer(2);
+      })
 
       this.marker6 = this.map.addMarkerSync({
-        title: '',
-        snippet: '',
         icon: {
           url: 'https://i.ibb.co/WBT84Vj/Group-74-7.png',
-          size:{
+          size: {
             width: 70,
             height: 85
           }
-        
         },
-
         position: {
           lat: 34.023910,
           lng: -118.279940
 
         },
-
       });
 
+      this.marker6.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+        console.log('clicked');
+        this.openDrawer(6);
+      })
 
+      //this.changeMarkerPos();
 
-      this.changeMarkerPos();
-
-
-
+    }).catch((error) => {
+      console.log('Error getting location', error);
     })
-
-
-
-
-    // this.map.animateCamera({
-    //   target: location.latLng,
-    //   zoom: 17,
-    //   tilt: 25,
-    // });
-
-
-
-
-
-    // data can be a set of coordinates, or an error (if an error occurred).
-    // data.coords.latitude
-    // data.coords.longitude
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
 
+  openDrawer(id){
+    this.zone.run(() => {
+      this.state = DrawerState.Docked;
+
+
+      if(id === 6){
+        this.truck.name = "Atlantic IceCream";
+        this.truck.desc[0] = "Family owned truck service specializing in";
+        this.truck.desc[1]= "shortcake and tamarind ice cream.";
+        this.truck.time = "8:00AM-5:30PM";
+        this.truck.ContactInfo = "TruckDriver@gmail.com";
+        this.truck.Status = "Active"
+      }else if(id === 2){
+        this.truck.name = "Atlantic Ice Cream";
+        this.truck.desc[0]= "Family owned truck service specializing  in shortcake and tamarind ice cream.";
+        this.truck.time = "9:00AM-4:30PM";
+        this.truck.ContactInfo = "AwsomeDriver@gmail.com";
+        this.truck.Status = "offline"
+      }
+    })
+
+    console.log(this.state);
+  }
 
   async changeMarkerPos() {
-    let htmlInfoWindow = new HtmlInfoWindow();
-    let frame: HTMLElement = document.createElement('div');
-    frame.innerHTML ='<ion-button color= "purple"id="truck" style=" display:block; width:  150px; height:50px"> More Info </ion-button>';
-    frame.style.cssText = 'border-radius: 50px; padding:0; margin: 0; background-color: purple';
-    
-    htmlInfoWindow.setBackgroundColor('purple');
 
-    htmlInfoWindow.setContent(frame, {
-      width: "150px",
-      height: "25px",
-    });
+    this.marker6.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
 
-     this.marker6.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-
-      htmlInfoWindow.open(this.marker6);
 
       setTimeout(() => {
         document.getElementById('truck').addEventListener('click', () => {
@@ -302,7 +288,7 @@ export class HomePage {
     });
   }
 
-  navigate(url){
+  navigate(url) {
     this.router.navigate([url]);
   }
 

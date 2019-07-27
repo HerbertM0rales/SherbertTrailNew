@@ -13,6 +13,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { IonBottomDrawerModule } from 'ion-bottom-drawer';
 
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -22,6 +24,7 @@ import { IonBottomDrawerModule } from 'ion-bottom-drawer';
     StatusBar,
     Geolocation,
     SplashScreen,
+    OneSignal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -8,7 +8,7 @@
 }
 
 #imageContainer{
-margin-top:50;
+margin-top:50px;
 padding: 50px;
 }
 
@@ -17,7 +17,7 @@ padding: 50px;
 }
 
 ion-bottom-drawer{
-    --ion-background-color: pink 
+    --ion-background-color: white
 }
 .margin{
     margin-left: 15px;
@@ -37,8 +37,35 @@ ion-bottom-drawer{
     margin-bottom: 15px;
 }
 .truck{
-    height: 150px;
-    width: 70%;
+    height: 165px;
+    width: 100%;
     display: block;
-    margin: auto;
+    margin-top: 20px;
 }
+
+button{
+    background-color: red;
+    width: 100px;
+    height: 25px;
+    
+}
+
+#bgd{
+    background-color: #CC96D8;
+}
+
+h3{
+    color: white;
+    margin-left: 75px;
+    font-size: 30px;
+}
+
+.cl{
+    color: white;
+    margin-left: 20px;
+    margin-right:10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
