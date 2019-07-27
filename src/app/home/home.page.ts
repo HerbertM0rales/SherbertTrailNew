@@ -164,7 +164,20 @@ export class HomePage {
 
         },
       });
+      this.marker6 = this.map.addMarkerSync({
+        icon: {
+          url: 'https://i.ibb.co/WD3zL5F/Group-58-1.png',
+          size: {
+            width: 42.27,
+            height: 57.07
+          }
+        },
+        position: {
+          lat: 34.019939,
+          lng: -118.28641
 
+        },
+      });
       this.marker6.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
         console.log('clicked');
         this.openDrawer(6);
@@ -184,14 +197,14 @@ export class HomePage {
 
 
       if(id === 6){
-        this.truck.name = "Atlantic IceCream";
+        this.truck.name = "FunTime Ice Cream";
         this.truck.desc[0] = "Family owned truck service specializing in";
         this.truck.desc[1]= "shortcake and tamarind ice cream.";
         this.truck.time = "8:00AM-5:30PM";
         this.truck.ContactInfo = "TruckDriver@gmail.com";
         this.truck.Status = "Active"
       }else if(id === 2){
-        this.truck.name = "Atlantic Ice Cream";
+        this.truck.name = "Frozen Ice Cream";
         this.truck.desc[0]= "Family owned truck service specializing  in shortcake and tamarind ice cream.";
         this.truck.time = "9:00AM-4:30PM";
         this.truck.ContactInfo = "AwsomeDriver@gmail.com";

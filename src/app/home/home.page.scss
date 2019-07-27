@@ -27,12 +27,12 @@ ion-bottom-drawer{
     height: 15px;
 }
 .gray{
-    background-color: #C4C4C4;
+    background-color: white;
     height: 8px;
     display: block;
     margin: auto;
     width: 30%;
-    border: solid 1px #c4c4c4;
+    border: solid 1px white;
     border-radius: 50px;
     margin-bottom: 15px;
 }
@@ -43,11 +43,9 @@ ion-bottom-drawer{
     margin-top: 20px;
 }
 
-button{
-    background-color: red;
-    width: 100px;
-    height: 25px;
-    
+#rbg{
+    color: white;  
+    margin-left: 25px;
 }
 
 #bgd{
@@ -55,9 +53,9 @@ button{
 }
 
 h3{
-    color: white;
     margin-left: 75px;
     font-size: 30px;
+    color: white
 }
 
 .cl{
@@ -69,3 +67,13 @@ h3{
     display: inline-block;
 }
 
+#pbg{
+    background-color: #CC96D8
+}
+
+#pc{
+    color: #CC96D8;
+}
+#schedule{
+    padding-left: 33.5%;
+}

@@ -3,28 +3,25 @@
     <!-- <ion-searchbar class="searchbar" color="shade">
         </ion-searchbar> -->
     <div id="map_canvas" style="height: 100%; width: 100%">
-      <div id="imageContainer">
-      </div>
-      <!-- <ion-button click=""> click me!</ion-button> -->
+        <div id="imageContainer">
+        </div>
+        <!-- <ion-button click=""> click me!</ion-button> -->
     </div>
-  </ion-content>
-  
-  <ion-bottom-drawer [(state)]="state" [dockedHeight]="300" distanceTop="100" minimumHeight="0">
-    <div class="space"></div>
-    <div class="gray"></div>
-    <img class="truck" src="../../assets/icon/ree.png" alt="">
-    <div class="margin">
-      <h3>Leons IceCreamTruck</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Nulla eu leo in neque pellentesque accumsan. Lorem ipsum dolor sit amet consectetur adipiscing.</p>
-      <div id="hr">
-        <H3>schedule:</H3>
-        <p>8:00AM-5:30PM</p>
-      </div>
-      <div id="hr">
-        <h3>Contact Information:</h3>
-        <p>filler@mail.com</p>
-        <p>(999)-999-9999</p>
-      </div>
+</ion-content>
+
+<ion-bottom-drawer [(state)]="state" [dockedHeight]="300" distanceTop="0" minimumHeight="0">
+    <div id="pbg">
+        <div class="space"></div>
+        <div class="gray"></div>
+        <h3>{{truck.name}}</h3>
+        <p id="rbg">{{truck.desc[0]}}{{truck.desc[1]}}</p>
+        <img class="truck" src="../../assets/icon/ree.png" alt="">
     </div>
-  </ion-bottom-drawer>
+        <div class="margin">
+        </div>
+        <div>
+            <H3 id="pc">Today's schedule</H3>
+
+            <p id="schedule">{{truck.time}}</p>
+        </div>
+</ion-bottom-drawer>
