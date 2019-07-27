@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-second',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecondPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-  }
+  };
+  onClick(){
+    this.router.navigate(['']);
+  };
 
 }
